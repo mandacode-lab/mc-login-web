@@ -1,23 +1,11 @@
-# Multi-stage build for login page
-FROM node:24-alpine AS builder
-
-WORKDIR /app
-
-# Copy files
-COPY index.html app.js ./
-COPY i18n/ ./i18n/
-
-# Optimize HTML (remove whitespace if needed)
-# For now, just copy as-is
-
 # Production stage with nginx
 FROM nginx:1.29-alpine
 
 # Copy custom nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy static files
-COPY --from=builder /app /usr/share/nginx/html
+# Copy static files directly
+COPY index.html app.js ./i18n/ /usr/share/nginx/html/
 
 # Set permissions for existing nginx user
 RUN chown -R nginx:nginx /usr/share/nginx/html && \
