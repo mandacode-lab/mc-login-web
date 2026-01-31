@@ -17,7 +17,7 @@ jobs:
     with:
       images: |
         [
-          {"dockerfile": "Dockerfile"}
+          {"name": "login-web": "dockerfile": "Dockerfile"}
         ]
       aws-region: ${{ vars.AWS_REGION }}
       ecr-registry: ${{ vars.REGISTRY }}
