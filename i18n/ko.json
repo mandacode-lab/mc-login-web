@@ -1,0 +1,17 @@
+{
+  "title": "로그인 - MandaCode",
+  "welcome": "환영합니다!",
+  "subtitle": "MandaCode 계정에 로그인하세요",
+  "id": "아이디",
+  "password": "비밀번호",
+  "totp": "TOTP 코드",
+  "totpPlaceholder": "000 000",
+  "totpHint": "인증 앱에서 6자리 코드를 입력하세요",
+  "login": "로그인",
+  "loggingIn": "로그인 중...",
+  "noAccount": "계정이 없으신가요?",
+  "signup": "회원가입",
+  "errorLogin": "로그인에 실패했습니다",
+  "errorAuth": "인증에 실패했습니다",
+  "errorTotpRequired": "6자리 TOTP 코드를 입력하세요"
+}

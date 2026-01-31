@@ -1,0 +1,17 @@
+{
+  "title": "ログイン - MandaCode",
+  "welcome": "ようこそ！",
+  "subtitle": "MandaCodeアカウントにログインしてください",
+  "id": "ID",
+  "password": "パスワード",
+  "totp": "TOTPコード",
+  "totpPlaceholder": "000 000",
+  "totpHint": "認証アプリから6桁のコードを入力してください",
+  "login": "ログイン",
+  "loggingIn": "ログイン中...",
+  "noAccount": "アカウントをお持ちでないですか？",
+  "signup": "新規登録",
+  "errorLogin": "ログインに失敗しました",
+  "errorAuth": "認証に失敗しました",
+  "errorTotpRequired": "6桁のTOTPコードを入力してください"
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="title">Login - MandaCode</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .login-container {
+      background: #f5f5f5;
+    }
+
+    .login-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+    }
+
+    .input-focus:focus {
+      outline: none;
+      border-color: #000;
+      box-shadow: 0 0 0 1px #000;
+    }
+
+    .btn-primary {
+      background: #000;
+      transition: background 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: #333;
+    }
+
+    .btn-primary:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .spinner {
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body class="login-container min-h-screen flex items-center justify-center p-4">
+  <div class="login-card rounded-lg shadow-sm w-full max-w-md p-8 relative">
+    <!-- Language Selector -->
+    <div class="absolute top-4 right-4">
+      <select id="languageSelect"
+        class="text-xs bg-white px-2 py-1 focus:outline-none focus:border-black cursor-pointer">
+        <option value="ko">한국어</option>
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+      </select>
+    </div>
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-2xl font-semibold text-black" data-i18n="welcome">Welcome!</h1>
+      <p class="text-gray-600 mt-2" data-i18n="subtitle">Sign in to your MandaCode account</p>
+    </div>
+
+    <!-- Error Message -->
+    <div id="errorMessage" class="hidden mb-4 p-3 bg-gray-50 border border-gray-300 rounded fade-in">
+      <div class="flex items-center">
+        <svg class="w-5 h-5 text-gray-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+            clip-rule="evenodd"></path>
+        </svg>
+        <span id="errorText" class="text-gray-800 text-sm"></span>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="space-y-6">
+      <!-- ID/Username -->
+      <div>
+        <label for="id" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="id">ID</label>
+        <input type="text" id="id" name="id" required
+          class="input-focus w-full px-3 py-2 border border-gray-300 rounded focus:outline-none transition-all"
+          placeholder="username" autocomplete="username">
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="password">Password</label>
+        <div class="relative">
+          <input type="password" id="password" name="password" required
+            class="input-focus w-full px-3 py-2 border border-gray-300 rounded focus:outline-none pr-10"
+            placeholder="••••••••" autocomplete="current-password">
+          <button type="button" id="togglePassword"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+            <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+              </path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- TOTP (Hidden by default) -->
+      <div id="totpSection" class="hidden fade-in">
+        <label for="totp" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="totp">TOTP Code</label>
+        <input type="text" id="totp" name="totp" maxlength="6" pattern="[0-9]{6]"
+          class="input-focus w-full px-3 py-2 border border-gray-300 rounded focus:outline-none text-center text-lg tracking-widest"
+          placeholder="000 000">
+        <p class="text-xs text-gray-500 mt-2" data-i18n="totpHint">Enter 6-digit code from authenticator app</p>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" id="submitBtn"
+        class="btn-primary w-full py-2 px-4 text-white font-medium rounded focus:outline-none disabled:cursor-not-allowed">
+        <span id="btnText" data-i18n="login">Sign In</span>
+        <div id="btnSpinner" class="spinner hidden mx-auto"></div>
+      </button>
+    </form>
+
+    <!-- Footer -->
+    <div class="mt-6 text-center">
+      <p class="text-sm text-gray-600">
+        <span data-i18n="noAccount">Don't have an account?</span>
+        <a href="#" class="font-medium text-black hover:underline">
+          <span data-i18n="signup">Sign Up</span>
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

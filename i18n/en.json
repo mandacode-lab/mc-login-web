@@ -1,0 +1,17 @@
+{
+  "title": "Login - MandaCode",
+  "welcome": "Welcome!",
+  "subtitle": "Sign in to your MandaCode account",
+  "id": "ID",
+  "password": "Password",
+  "totp": "TOTP Code",
+  "totpPlaceholder": "000 000",
+  "totpHint": "Enter 6-digit code from authenticator app",
+  "login": "Sign In",
+  "loggingIn": "Signing in...",
+  "noAccount": "Don't have an account?",
+  "signup": "Sign Up",
+  "errorLogin": "Login failed",
+  "errorAuth": "Authentication failed",
+  "errorTotpRequired": "Please enter 6-digit TOTP code"
+}
